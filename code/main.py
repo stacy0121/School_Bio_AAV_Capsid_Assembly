@@ -15,9 +15,13 @@ import register
 from register import dataset
 from cudaloader import CudaLoader
 
-from torchsummary import summary
+#from torchsummary import summary
 #from dataloader import Loader
 import os
+import matplotlib.pyplot as plt
+
+precision = []   # 정확도 리스트
+avg_loss = []    # 손실값 리스트
 
 os.environ['CUDA_LAUNCH_BLOCKING'] = "1"
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
@@ -53,16 +57,30 @@ try:
         start = time.time()
         if epoch %10 == 0:
             cprint("[TEST]")
-            Procedure.Test(dataset, Recmodel, epoch, w, world.config['multicore'])
+            procedure = Procedure.Test(dataset, Recmodel, epoch, w, world.config['multicore'])
         # BPR Loss, average loss?
-        output_information = Procedure.BPR_train_original(cuda_loader, Recmodel, bpr, epoch, neg_k=Neg_k,w=w)
+        output_information, loss = Procedure.BPR_train_original(cuda_loader, Recmodel, bpr, epoch, neg_k=Neg_k,w=w)
         
         print(f'[saved][{output_information}]')
         torch.save(Recmodel.state_dict(), weight_file)
         print(f"[TOTAL TIME] {time.time() - start}")
+        
+        # 정확도, 손실값 리스트에 추가
+        precision.append(procedure['precision'])
+        avg_loss.append(loss)
 finally:
     if world.tensorboard:
         w.close()
 
 # model summary
-#print(summary(Recmodel, (Loader.n_user, Loader.m_item)))
+# print(summary(Recmodel, (Loader.n_user, Loader.m_item)))
+
+# 정확도, 손실 그래프 작성
+plt.plot(precision)
+plt.xlabel('epoch')
+plt.ylabel('precision')
+plt.show()
+plt.plot(avg_loss)
+plt.xlabel('epoch')
+plt.ylabel('loss')
+plt.show()

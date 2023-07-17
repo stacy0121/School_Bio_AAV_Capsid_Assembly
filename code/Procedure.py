@@ -43,7 +43,7 @@ def BPR_train_original(cuda_loader, recommend_model, loss_class, epoch, neg_k=1,
         if world.tensorboard:
             w.add_scalar(f'BPRLoss/BPR', cri, epoch * int(len(users) / world.config['bpr_batch_size']) + batch_i)
     aver_loss = aver_loss / total_batch
-    return f"[BPR[aver loss {aver_loss:.3e}]"   # 소수점 아래 3자리
+    return f"[BPR[aver loss {aver_loss:.3e}]", aver_loss   # 소수점 아래 3자리
     
     
 def test_one_batch(X):
