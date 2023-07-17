@@ -31,4 +31,7 @@ https://github.com/gusye1234/LightGCN-PyTorch
   |Layer=2|0.0536|0.3050|0.3023   |
   |Layer=3|0.0519|0.3042|0.2837   |
   |Layer=4|0.0555|0.3133|0.2895   |
-  
+
+- graph  
+![Figure_1](https://github.com/stacy0121/AAV_Capsid_Assembly/assets/72933504/8e764633-9e25-4bdd-a029-1d829eae2fcc)
+![Figure_2](https://github.com/stacy0121/AAV_Capsid_Assembly/assets/72933504/2985d2ad-fb49-4cf1-bc2c-fc5984230243)
