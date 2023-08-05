@@ -10,7 +10,7 @@ import world
 import numpy as np
 import torch
 import utils
-import dataloader
+from dataloader import Loader
 from pprint import pprint
 from time import time
 from tqdm import tqdm
@@ -67,14 +67,14 @@ def Test(dataset, Recmodel, epoch, w=None, multicore=0):
     testDict: dict = dataset.testDict
     Recmodel: model.LightGCN
     # eval mode with no dropout
-    Recmodel = Recmodel.eval()
+    Recmodel = Recmodel.eval()   # 평가 모드 설정
     max_K = max(world.topks)
     if multicore == 1:
         pool = multiprocessing.Pool(CORES)
     results = {'precision': np.zeros(len(world.topks)),
                'recall': np.zeros(len(world.topks)),
                'ndcg': np.zeros(len(world.topks))}
-    with torch.no_grad():
+    with torch.no_grad():        # 그라디언트 계산 비활성화
         users = list(testDict.keys())
         try:
             assert u_batch_size <= len(users) / 10
@@ -139,4 +139,5 @@ def Test(dataset, Recmodel, epoch, w=None, multicore=0):
         if multicore == 1:
             pool.close()
         print(results)
-        return results
+
+        return results, Recmodel

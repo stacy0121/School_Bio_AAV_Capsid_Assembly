@@ -16,7 +16,7 @@ from register import dataset
 from cudaloader import CudaLoader
 
 #from torchsummary import summary
-#from dataloader import Loader
+#=from dataloader import Loader
 import os
 import matplotlib.pyplot as plt
 
@@ -57,17 +57,23 @@ try:
         start = time.time()
         if epoch %10 == 0:
             cprint("[TEST]")
-            procedure = Procedure.Test(dataset, Recmodel, epoch, w, world.config['multicore'])
+            procedure, recModel = Procedure.Test(dataset, Recmodel, epoch, w, world.config['multicore'])   # 예측
         # BPR Loss, average loss?
         output_information, loss = Procedure.BPR_train_original(cuda_loader, Recmodel, bpr, epoch, neg_k=Neg_k,w=w)
         
         print(f'[saved][{output_information}]')
-        torch.save(Recmodel.state_dict(), weight_file)
+        torch.save(Recmodel.state_dict(), weight_file)   # 모델 저장
         print(f"[TOTAL TIME] {time.time() - start}")
-        
+
+        #----------------------------------------------------------
         # 정확도, 손실값 리스트에 추가
         precision.append(procedure['precision'])
         avg_loss.append(loss)
+
+        # 검증 오차가 가장 적은 최적의 모델을 저장
+        # if not best_val_loss or val_loss < best_val_loss:
+        #     best_val_loss = val_loss
+        #     best_model = model
 finally:
     if world.tensorboard:
         w.close()
@@ -84,3 +90,10 @@ plt.plot(avg_loss)
 plt.xlabel('epoch')
 plt.ylabel('loss')
 plt.show()
+
+# 테스트 세트 첫번째 데이터로 예측
+test_data = dataset.get_test_dict()   # 테스트 데이터 딕셔너리
+user = list(test_data.keys())[0]
+items = test_data[user]
+pred = recModel(user, items)   # 예측 결과(확률)의 최대값 인덱스
+print(f'Predicted: "{pred}"')

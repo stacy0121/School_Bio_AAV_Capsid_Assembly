@@ -92,42 +92,44 @@ class Loader(BasicDataset):
         testUniqueUsers, testItem, testUser = [], [], []
         self.traindataSize = 0   # 학습 데이터 크기
         self.testDataSize = 0
-        # 추가 
-        item_to_index, user_to_index = {}, {}
+        ## 추가 
+        item_to_index, user_to_index = {}, {}   # 전체 인덱스 데이터
         item_current_index, user_current_index = 0, 0
         items_ = []
 
+        ## 훈련 세트 전처리
         with open(train_file) as f:
             for line in f.readlines():
                 if len(line) > 0:
                     line = line.split()
 
-                    # 고유 인덱스 부여
-                    for item in line[1:]:   # 1번부터
+                    ## 인덱스로 변환
+                    for item in line[1:]:              # 1번부터 = 암세포
                         if item not in item_to_index:   
-                            item_to_index[item] = item_current_index
+                            item_to_index[item] = item_current_index   # 딕셔너리에 고유 인덱스 추가
                             item_current_index += 1
 
-                    if line[0] not in user_to_index:   # 0번   
+                    if line[0] not in user_to_index:   # 0번 = 항암제
                         user_to_index[line[0]] = user_current_index
                         user_current_index += 1
                     
-                    for key in line[1:]:  # item 리스트 인덱스로 변경
+                    for key in line[1:]:               # item 인덱스 리스트로 변경
                         items_.append(item_to_index.get(key))
 
-                    items = items_
-                    uid = user_to_index[line[0]]
+                    items = items_                     # item 인덱스 리스트
+                    uid = user_to_index[line[0]]       # value of user dictionary = user 인덱스
                     trainUniqueUsers.append(uid)
                     trainUser.extend([uid] * len(items))
                     trainItem.extend(items)
                     self.m_item = max(self.m_item, max(items))
                     self.n_user = max(self.n_user, uid)
                     self.traindataSize += len(items)
-                    items_ = []      # 행마다 초기화
+                    items_ = []                        # 행마다 초기화
         self.trainUniqueUsers = np.array(trainUniqueUsers)
         self.trainUser = np.array(trainUser)
         self.trainItem = np.array(trainItem)
 
+        ## 테스트 세트 전처리
         with open(test_file) as f:
             for line in f.readlines():
                 if len(line) > 0:
@@ -177,6 +179,13 @@ class Loader(BasicDataset):
         self._allPos = self.getUserPosItems(list(range(self.n_user)))
         self.__testDict = self.__build_test()
         print(f"{world.dataset} is ready to go")
+
+    def get_test_dict(self):
+        """
+        반환:
+            dict: {user: [items]}
+        """
+        return self.__testDict
 
     @property
     def n_users(self):
