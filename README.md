@@ -6,22 +6,22 @@ https://github.com/gusye1234/LightGCN-PyTorch
 ### 1. User-based Collaborative Filtering, Content-based Filtering
 <https://colab.research.google.com/drive/1Oge9cgDc3nmkXce_L9t9OAFPZ50TKdVa?usp=chrome_ntp#scrollTo=v9qghEP3L_x1>
       
-### 2. pytorch lightgcn - python scripts
+### 2. Pytorch lightgcn - python scripts
   - log output
     
     ```
     ...
     ======================
-    EPOCH[7/1000]
-    BPR[sample time][0.6=0.63+0.01]
+    EPOCH[7/155]
+    BPR[sample time][0.7=0.66+0.00]
     [saved][[BPR[aver loss 6.336e-01]]
-    [TOTAL TIME] 1.22074294090271
+    [TOTAL TIME] 1.1936500072479248
     ...
     ======================
-    EPOCH[132/1000]
-    BPR[sample time][0.6=0.58+0.00]
+    EPOCH[132/155]
+    BPR[sample time][0.6=0.64+0.00]
     [saved][[BPR[aver loss 2.141e-01]]
-    [TOTAL TIME] 1.1073217391967773
+    [TOTAL TIME] 1.170243740081787
     ...
     ```
 - results
@@ -33,5 +33,5 @@ https://github.com/gusye1234/LightGCN-PyTorch
   |Layer=4|0.0555|0.3133|0.2895   |
 
 - graph  
-![Figure_1](https://github.com/stacy0121/AAV_Capsid_Assembly/assets/72933504/8e764633-9e25-4bdd-a029-1d829eae2fcc)
-![Figure_2](https://github.com/stacy0121/AAV_Capsid_Assembly/assets/72933504/2985d2ad-fb49-4cf1-bc2c-fc5984230243)
+![Figure_1](https://github.com/stacy0121/AAV_Capsid_Assembly/assets/72933504/fd825234-2096-4ce5-a238-cafdb00aa94b)
+![Figure_2](https://github.com/stacy0121/AAV_Capsid_Assembly/assets/72933504/6e8be682-d990-40f4-8fc3-2ed795958b1f)
