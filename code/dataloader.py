@@ -93,7 +93,7 @@ class Loader(BasicDataset):
         self.traindataSize = 0   # 학습 데이터 크기
         self.testDataSize = 0
         ## 추가 
-        item_to_index, user_to_index = {}, {}   # 전체 인덱스 데이터
+        self.item_to_index, self.user_to_index = {}, {}   # 전체 인덱스 데이터
         item_current_index, user_current_index = 0, 0
         items_ = []
 
@@ -105,19 +105,19 @@ class Loader(BasicDataset):
 
                     ## 인덱스로 변환
                     for item in line[1:]:              # 1번부터 = 암세포
-                        if item not in item_to_index:   
-                            item_to_index[item] = item_current_index   # 딕셔너리에 고유 인덱스 추가
+                        if item not in self.item_to_index:   
+                            self.item_to_index[item] = item_current_index   # 딕셔너리에 고유 인덱스 추가
                             item_current_index += 1
 
-                    if line[0] not in user_to_index:   # 0번 = 항암제
-                        user_to_index[line[0]] = user_current_index
+                    if line[0] not in self.user_to_index:   # 0번 = 항암제
+                        self.user_to_index[line[0]] = user_current_index
                         user_current_index += 1
                     
                     for key in line[1:]:               # item 인덱스 리스트로 변경
-                        items_.append(item_to_index.get(key))
+                        items_.append(self.item_to_index.get(key))
 
                     items = items_                     # item 인덱스 리스트
-                    uid = user_to_index[line[0]]       # value of user dictionary = user 인덱스
+                    uid = self.user_to_index[line[0]]       # value of user dictionary = user 인덱스
                     trainUniqueUsers.append(uid)
                     trainUser.extend([uid] * len(items))
                     trainItem.extend(items)
@@ -137,19 +137,19 @@ class Loader(BasicDataset):
 
                     # 고유 인덱스 부여
                     for item in line[1:]:
-                        if item not in item_to_index:   
-                            item_to_index[item] = item_current_index
+                        if item not in self.item_to_index:   
+                            self.item_to_index[item] = item_current_index
                             item_current_index += 1
 
-                    if line[0] not in user_to_index:
-                        user_to_index[line[0]] = user_current_index
+                    if line[0] not in self.user_to_index:
+                        self.user_to_index[line[0]] = user_current_index
                         user_current_index += 1
                     
                     for key in line[1:]:
-                        items_.append(item_to_index.get(key))
+                        items_.append(self.item_to_index.get(key))
 
                     items = items_
-                    uid = user_to_index[line[0]]
+                    uid = self.user_to_index[line[0]]
                     testUniqueUsers.append(uid)
                     testUser.extend([uid] * len(items))
                     testItem.extend(items)
@@ -183,9 +183,9 @@ class Loader(BasicDataset):
     def get_test_dict(self):
         """
         반환:
-            dict: {user: [items]}
+            __testDict: {user: [items]}
         """
-        return self.__testDict
+        return self.__testDict, self.user_to_index, self.item_to_index
 
     @property
     def n_users(self):

@@ -61,7 +61,7 @@ if model_name not in all_models:
 
 
 
-TRAIN_epochs = 155   # args.epochs=1000
+TRAIN_epochs = 155   # args.epochs = 1000
 LOAD = args.load
 PATH = args.path
 topks = eval(args.topks)

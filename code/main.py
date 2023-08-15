@@ -16,7 +16,7 @@ from register import dataset
 from cudaloader import CudaLoader
 
 #from torchsummary import summary
-#=from dataloader import Loader
+from dataloader import Loader
 import os
 import matplotlib.pyplot as plt
 
@@ -81,7 +81,7 @@ finally:
 # model summary
 # print(summary(Recmodel, (Loader.n_user, Loader.m_item)))
 
-# 정확도, 손실 그래프 작성
+## 정확도, 손실 그래프 작성
 plt.plot(precision)
 plt.xlabel('epoch')
 plt.ylabel('precision')
@@ -91,9 +91,18 @@ plt.xlabel('epoch')
 plt.ylabel('loss')
 plt.show()
 
-# 테스트 세트 첫번째 데이터로 예측
-test_data = dataset.get_test_dict()   # 테스트 데이터 딕셔너리
+## 테스트 세트 첫번째 데이터로 예측
+test_data, user_index, item_index = dataset.get_test_dict()   # 테스트 데이터 딕셔너리
+users = list(test_data.keys())        # 전체 항암제(user)
 user = list(test_data.keys())[0]
-items = test_data[user]
-pred = recModel(user, items)   # 예측 결과(확률)의 최대값 인덱스
-print(f'Predicted: "{pred}"')
+item = test_data[user][0]             # 예측할 암세포(item)
+pred = recModel(item, users)          # 예측
+max_index = torch.argmax(pred)
+
+for key, val in item_index.items():
+    if val == item:
+        print(f'\nCancer cell: "{key}"')
+
+for key, val in user_index.items():
+    if val == max_index.item():
+        print(f'Predicted: "{key}"')
