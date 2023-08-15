@@ -13,15 +13,15 @@ https://github.com/gusye1234/LightGCN-PyTorch
     ...
     ======================
     EPOCH[7/155]
-    BPR[sample time][0.7=0.66+0.00]
+    BPR[sample time][0.6=0.64+0.00]
     [saved][[BPR[aver loss 6.336e-01]]
-    [TOTAL TIME] 1.1936500072479248
+    [TOTAL TIME] 1.1895248889923096
     ...
     ======================
     EPOCH[132/155]
-    BPR[sample time][0.6=0.64+0.00]
+    BPR[sample time][0.6=0.60+0.00]
     [saved][[BPR[aver loss 2.141e-01]]
-    [TOTAL TIME] 1.170243740081787
+    [TOTAL TIME] 1.105276107788086
     ...
     ```
 - results
@@ -35,3 +35,10 @@ https://github.com/gusye1234/LightGCN-PyTorch
 - graph  
 ![Figure_1](https://github.com/stacy0121/AAV_Capsid_Assembly/assets/72933504/fd825234-2096-4ce5-a238-cafdb00aa94b)
 ![Figure_2](https://github.com/stacy0121/AAV_Capsid_Assembly/assets/72933504/6e8be682-d990-40f4-8fc3-2ed795958b1f)
+
+- predict
+  ```
+  ...
+  Cancer cell: "OACp4C"
+  Predicted: "AZ960"
+  ```
