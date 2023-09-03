@@ -47,25 +47,25 @@ https://github.com/gusye1234/LightGCN-PyTorch
     ======================
     EPOCH[0/155]
     [TEST]
-    {'precision': array([0.30813953]), 'recall': array([0.05223946]), 'ndcg': array([0.32680886])}
-    BPR[sample time][0.7=0.68+0.00]
-    [saved][[BPR[aver loss 1.966e-01]]
-    [TOTAL TIME] 1.5202796459197998
+    {'precision': array([0.29534884]), 'recall': array([0.03596262]), 'ndcg': array([0.3149703])}
+    BPR[sample time][0.6=0.64+0.00]
+    [saved][[BPR[aver loss 9.232e-02]]
+    [TOTAL TIME] 1.4216923713684082
     ...
     ======================
     EPOCH[150/155]
     [TEST]
-    {'precision': array([0.29825581]), 'recall': array([0.03319026]), 'ndcg': array([0.31764856])}
-    BPR[sample time][0.6=0.56+0.00]
-    [saved][[BPR[aver loss 1.218e-01]]
-    [TOTAL TIME] 1.3728625774383545
+    {'precision': array([0.29360465]), 'recall': array([0.02972679]), 'ndcg': array([0.31071663])}
+    BPR[sample time][0.6=0.57+0.00]
+    [saved][[BPR[aver loss 6.719e-02]]
+    [TOTAL TIME] 1.3881680965423584
     ```
 - results
   |        |recall|ndcg  |precision|
   |--------|------|------|---------|
-  |Layer=1 |0.0522|0.3268|0.3081   |
-  |Layer=16|0.0332|0.3176|0.2983   |
+  |Layer=1 |0.0360|0.3150|0.2953   |
+  |Layer=16|0.0297|0.3107|0.2936   |
 
 - graph
-<img src="https://github.com/stacy0121/AAV_Capsid_Assembly/assets/72933504/f257805e-01b7-400b-8006-556bd27756eb.png" width="500" height="400"/>
-<img src="https://github.com/stacy0121/AAV_Capsid_Assembly/assets/72933504/df1a72b0-2b52-4d63-82bf-f7c0caeda19a.png" width="500" height="400"/>
+<img src="https://github.com/stacy0121/AAV_Capsid_Assembly/assets/72933504/2deb84d5-e5bc-4a65-a326-57f643393728.png" width="500" height="400"/>
+<img src="https://github.com/stacy0121/AAV_Capsid_Assembly/assets/72933504/3937f99c-ba3f-4faa-aa3c-8c1cde08df34.png" width="500" height="400"/>
