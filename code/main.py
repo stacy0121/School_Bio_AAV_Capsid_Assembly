@@ -33,7 +33,8 @@ cuda_loader = CudaLoader(dataset, world.TRAIN_epochs)
 
 weight_file = utils.getFileName()
 print(f"load and save to {weight_file}")
-if world.LOAD:
+## train: 0, test : 1
+if world.LOAD:   
     try:
         Recmodel.load_state_dict(torch.load(weight_file,map_location=torch.device('cpu')))
         world.cprint(f"loaded model weights from {weight_file}") 
@@ -57,8 +58,8 @@ try:
         start = time.time()
         if epoch %10 == 0:
             cprint("[TEST]")
-            procedure, recModel = Procedure.Test(dataset, Recmodel, epoch, w, world.config['multicore'])   # 예측
-        # BPR Loss, average loss?
+            procedure = Procedure.Test(dataset, Recmodel, epoch, w, world.config['multicore'])   # 예측
+        # BPR Loss, average loss
         output_information, loss = Procedure.BPR_train_original(cuda_loader, Recmodel, bpr, epoch, neg_k=Neg_k,w=w)
         
         print(f'[saved][{output_information}]')
@@ -66,7 +67,7 @@ try:
         print(f"[TOTAL TIME] {time.time() - start}")
 
         #----------------------------------------------------------
-        # 정확도, 손실값 리스트에 추가
+        # 정확도, 손실값을 리스트에 추가
         precision.append(procedure['precision'])
         avg_loss.append(loss)
 
@@ -90,19 +91,3 @@ plt.plot(avg_loss)
 plt.xlabel('epoch')
 plt.ylabel('loss')
 plt.show()
-
-## 테스트 세트 첫번째 데이터로 예측
-test_data, user_index, item_index = dataset.get_test_dict()   # 테스트 데이터 딕셔너리
-users = list(test_data.keys())        # 전체 항암제(user)
-user = list(test_data.keys())[0]
-item = test_data[user][0]             # 예측할 암세포(item)
-pred = recModel(item, users)          # 예측
-max_index = torch.argmax(pred)
-
-for key, val in item_index.items():
-    if val == item:
-        print(f'\nCancer cell: "{key}"')
-
-for key, val in user_index.items():
-    if val == max_index.item():
-        print(f'Predicted: "{key}"')

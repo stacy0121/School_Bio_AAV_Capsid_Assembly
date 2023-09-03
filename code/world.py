@@ -62,7 +62,8 @@ if model_name not in all_models:
 
 
 TRAIN_epochs = 155   # args.epochs = 1000
-LOAD = args.load
+# LOAD = args.load   # train
+LOAD = 1             # test
 PATH = args.path
 topks = eval(args.topks)
 tensorboard = args.tensorboard

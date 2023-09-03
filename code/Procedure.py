@@ -71,8 +71,8 @@ def Test(dataset, Recmodel, epoch, w=None, multicore=0):
     max_K = max(world.topks)
     if multicore == 1:
         pool = multiprocessing.Pool(CORES)
-    results = {'precision': np.zeros(len(world.topks)),
-               'recall': np.zeros(len(world.topks)),
+    results = {'precision': np.zeros(len(world.topks)),   # 정밀도 : TP/(TP+FP)
+               'recall': np.zeros(len(world.topks)),      # 재현율 : TP/(TP+FN)
                'ndcg': np.zeros(len(world.topks))}
     with torch.no_grad():        # 그라디언트 계산 비활성화
         users = list(testDict.keys())
@@ -83,8 +83,8 @@ def Test(dataset, Recmodel, epoch, w=None, multicore=0):
         users_list = []
         rating_list = []
         groundTrue_list = []
-        auc_record = []
-        # ratings = []
+        #auc_record = []
+        #ratings = []
         total_batch = len(users) // u_batch_size + 1
         for batch_users in utils.minibatch(users, batch_size=u_batch_size):
             allPos = dataset.getUserPosItems(batch_users)
@@ -102,12 +102,14 @@ def Test(dataset, Recmodel, epoch, w=None, multicore=0):
             rating[exclude_index, exclude_items] = -(1<<10)
             _, rating_K = torch.topk(rating, k=max_K)
             #rating = rating.cpu().numpy()
-            '''aucs = [ 
+            '''
+            aucs = [ 
                     utils.AUC(rating[i],
                               dataset, 
                               test_data) for i, test_data in enumerate(groundTrue)
                 ]
-            auc_record.extend(aucs)'''
+            auc_record.extend(aucs)   # Area Under the Curve
+            '''
             del rating
             users_list.append(batch_users)
             rating_list.append(rating_K.cpu())
@@ -140,4 +142,4 @@ def Test(dataset, Recmodel, epoch, w=None, multicore=0):
             pool.close()
         print(results)
 
-        return results, Recmodel
+        return results
