@@ -12,7 +12,7 @@ utils.set_seed(world.seed)
 print(">>SEED:", world.seed)
 # ==============================
 import register
-from register import dataset
+from register import dataset, data_test
 from cudaloader import CudaLoader
 
 #from torchsummary import summary
@@ -35,6 +35,7 @@ weight_file = utils.getFileName()
 print(f"load and save to {weight_file}")
 ## train: 0, test : 1
 if world.LOAD:   
+    dataset = data_test
     try:
         Recmodel.load_state_dict(torch.load(weight_file,map_location=torch.device('cpu')))
         world.cprint(f"loaded model weights from {weight_file}") 

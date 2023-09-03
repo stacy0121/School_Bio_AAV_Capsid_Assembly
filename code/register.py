@@ -7,7 +7,7 @@ from pprint import pprint
 
 if world.dataset in ['cancer']:     # 변경
     dataset = dataloader.Loader("../data/"+world.dataset)
-    # data_test = dataloader.Loader("../data/"+world.dataset, mode='test')
+    data_test = dataloader.Loader("../data/"+world.dataset, mode='test')
 
 print('===========config================')
 pprint(world.config)
