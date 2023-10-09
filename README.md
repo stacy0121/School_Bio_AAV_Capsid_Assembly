@@ -20,10 +20,10 @@ https://github.com/gusye1234/LightGCN-PyTorch
     ======================
     EPOCH[10/130]
     [TEST]
-    {'precision': array([0.15503876]), 'recall': array([0.08183959]), 'ndcg': array([0.18814535])}
-    BPR[sample time][0.5=0.46+0.00]
-    [saved][[BPR[aver loss 3.871e-01]]
-    [TOTAL TIME] 1.610830307006836
+    {'precision': array([0.11414729]), 'recall': array([0.06507957]), 'ndcg': array([0.12391721])}
+    BPR[sample time][0.4=0.44+0.01]
+    [saved][[BPR[aver loss 6.736e-01]]
+    [TOTAL TIME] 1.7916338443756104
     ...
     ======================
     EPOCH[113/130]
