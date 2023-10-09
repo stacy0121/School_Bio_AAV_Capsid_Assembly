@@ -12,7 +12,7 @@ utils.set_seed(world.seed)
 print(">>SEED:", world.seed)
 # ==============================
 import register
-from register import dataset, data_test
+from register import dataset
 from cudaloader import CudaLoader
 
 #from torchsummary import summary
@@ -21,6 +21,7 @@ import os
 import matplotlib.pyplot as plt
 
 precision = []   # 정확도 리스트
+ndcg = []
 avg_loss = []    # 손실값 리스트
 
 os.environ['CUDA_LAUNCH_BLOCKING'] = "1"
@@ -33,11 +34,9 @@ cuda_loader = CudaLoader(dataset, world.TRAIN_epochs)
 
 weight_file = utils.getFileName()
 print(f"load and save to {weight_file}")
-## train: 0, test : 1
-if world.LOAD:   
-    dataset = data_test
+if world.LOAD:
     try:
-        Recmodel.load_state_dict(torch.load(weight_file,map_location=torch.device('cpu')))
+        Recmodel.load_state_dict(torch.load(weight_file,map_location=torch.device('cuda')))
         world.cprint(f"loaded model weights from {weight_file}") 
     except FileNotFoundError:
         print(f"{weight_file} not exists, start from beginning")
@@ -57,7 +56,7 @@ try:
         print('======================')
         print(f'EPOCH[{epoch}/{world.TRAIN_epochs}]')
         start = time.time()
-        if epoch %10 == 0:
+        if epoch %10 == 0:   # 에포크 10번마다 테스트
             cprint("[TEST]")
             procedure = Procedure.Test(dataset, Recmodel, epoch, w, world.config['multicore'])   # 예측
         # BPR Loss, average loss
@@ -70,6 +69,7 @@ try:
         #----------------------------------------------------------
         # 정확도, 손실값을 리스트에 추가
         precision.append(procedure['precision'])
+        ndcg.append(procedure['ndcg'])
         avg_loss.append(loss)
 
         # 검증 오차가 가장 적은 최적의 모델을 저장
@@ -87,6 +87,10 @@ finally:
 plt.plot(precision)
 plt.xlabel('epoch')
 plt.ylabel('precision')
+plt.show()
+plt.plot(ndcg)
+plt.xlabel('epoch')
+plt.ylabel('ndcg')
 plt.show()
 plt.plot(avg_loss)
 plt.xlabel('epoch')

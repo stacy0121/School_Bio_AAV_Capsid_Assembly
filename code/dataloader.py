@@ -75,13 +75,12 @@ class Loader(BasicDataset):
     gowalla dataset
     """
 
-    def __init__(self,config = world.config,mode='train',path="C:/Users/stcie/AppData/Local/Programs/Python/Python39/Scripts/AAV/data/cancer"):   # 변경
-        # train or test
+    def __init__(self,config = world.config,path="C:/Users/stcie/AppData/Local/Programs/Python/Python39/Scripts/AAV/data/cancer"):
         cprint(f'loading [{path}]')
         self.split = 0   # config['A_split']=False
         self.folds = 0   # config['A_n_fold']=False
-        self.mode_dict = {'train': 0, "test": 1}
-        self.mode = self.mode_dict[mode]   # mode에 따라 train, test 데이터셋 사용
+        # self.mode_dict = {'train': 0, "test": 1}
+        # self.mode = self.mode_dict[mode]   # mode에 따라 train, test 데이터셋 사용
         self.n_user = 0   # 사용자 수
         self.m_item = 0   # 아이템 수
         

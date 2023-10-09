@@ -10,13 +10,13 @@ import argparse
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Go lightGCN")
-    parser.add_argument('--bpr_batch', type=int,default=2048,
+    parser.add_argument('--bpr_batch', type=int,default=512,
                         help="the batch size for bpr loss training procedure")
-    parser.add_argument('--recdim', type=int,default=64,
+    parser.add_argument('--recdim', type=int,default=16,
                         help="the embedding size of lightGCN")
     parser.add_argument('--layer', type=int,default=3,
                         help="the layer num of lightGCN")
-    parser.add_argument('--lr', type=float,default=0.001,
+    parser.add_argument('--lr', type=float,default=0.0001,
                         help="the learning rate")
     parser.add_argument('--ceweight', type=float,default=1e-2,
                         help="the learning rate")
@@ -26,9 +26,9 @@ def parse_args():
                         help="using the dropout or not")
     parser.add_argument('--keepprob', type=float,default=0.6,
                         help="the batch size for bpr loss training procedure")
-    parser.add_argument('--a_fold', type=int,default=100,
+    parser.add_argument('--a_fold', type=int,default=25,
                         help="the fold num used to split large adj matrix, like gowalla")
-    parser.add_argument('--testbatch', type=int,default=100,
+    parser.add_argument('--testbatch', type=int,default=25,
                         help="the batch size of users for testing")
     parser.add_argument('--dataset', type=str,default='gowalla',
                         help="available datasets: [lastfm, gowalla, yelp2018, amazon-book]")

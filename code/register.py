@@ -5,9 +5,8 @@ import model_grand as model
 import utils
 from pprint import pprint
 
-if world.dataset in ['cancer']:     # 변경
+if world.dataset in ['cancer']:
     dataset = dataloader.Loader("../data/"+world.dataset)
-    data_test = dataloader.Loader("../data/"+world.dataset, mode='test')
 
 print('===========config================')
 pprint(world.config)

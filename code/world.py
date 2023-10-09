@@ -16,7 +16,7 @@ import multiprocessing
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
 args = parse_args()
 
-ROOT_PATH = "../Scripts"    # 변경
+ROOT_PATH = "../Scripts/AVV"
 CODE_PATH = join(ROOT_PATH, 'code')
 DATA_PATH = join(ROOT_PATH, 'data')
 BOARD_PATH = join(CODE_PATH, 'runs')
@@ -31,7 +31,7 @@ config = {}
 all_dataset = ['cancer']   # 변경
 all_models  = ['lgn']
 # config['batch_size'] = 4096
-config['bpr_batch_size'] = args.bpr_batch
+config['bpr_batch_size'] = 512   #args.bpr_batch
 config['latent_dim_rec'] = args.recdim
 config['lightGCN_n_layers']= args.layer
 config['dropout'] = args.dropout
@@ -46,7 +46,7 @@ config['A_split'] = False
 config['bigdata'] = False
 
 GPU = torch.cuda.is_available()
-device = torch.device("cpu")   # 'cuda' if GPU else "cpu"
+device = torch.device("cuda")   # 'cuda' if GPU else "cpu"
 CORES = multiprocessing.cpu_count() // 2
 seed = args.seed
 
@@ -61,7 +61,7 @@ if model_name not in all_models:
 
 
 
-TRAIN_epochs = 155   # args.epochs = 1000
+TRAIN_epochs = 130   # args.epochs = 1000
 # LOAD = args.load   # train
 LOAD = 1             # test
 PATH = args.path
