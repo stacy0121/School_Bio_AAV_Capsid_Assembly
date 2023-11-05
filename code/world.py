@@ -16,7 +16,7 @@ import multiprocessing
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
 args = parse_args()
 
-ROOT_PATH = "../Scripts/AVV"
+ROOT_PATH = ""
 CODE_PATH = join(ROOT_PATH, 'code')
 DATA_PATH = join(ROOT_PATH, 'data')
 BOARD_PATH = join(CODE_PATH, 'runs')
@@ -61,9 +61,8 @@ if model_name not in all_models:
 
 
 
-TRAIN_epochs = 130   # args.epochs = 1000
-# LOAD = args.load   # train
-LOAD = 1             # test
+TRAIN_epochs = args.epochs
+LOAD = args.load
 PATH = args.path
 topks = eval(args.topks)
 tensorboard = args.tensorboard

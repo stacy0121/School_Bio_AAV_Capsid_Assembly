@@ -1,12 +1,14 @@
 import world
 import dataloader
+import dataloader_switch
 # import model
 import model_grand as model
 import utils
 from pprint import pprint
 
 if world.dataset in ['cancer']:
-    dataset = dataloader.Loader("../data/"+world.dataset)
+    dataset = dataloader.Loader("data/"+world.dataset)
+    dataset_switch = dataloader_switch.Loader_Switch("data/"+world.dataset)
 
 print('===========config================')
 pprint(world.config)

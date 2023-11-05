@@ -12,11 +12,10 @@ utils.set_seed(world.seed)
 print(">>SEED:", world.seed)
 # ==============================
 import register
-from register import dataset
+from register import dataset, dataset_switch
 from cudaloader import CudaLoader
 
 #from torchsummary import summary
-from dataloader import Loader
 import os
 import matplotlib.pyplot as plt
 
@@ -58,7 +57,7 @@ try:
         start = time.time()
         if epoch %10 == 0:   # 에포크 10번마다 테스트
             cprint("[TEST]")
-            procedure = Procedure.Test(dataset, Recmodel, epoch, w, world.config['multicore'])   # 예측
+            procedure, recModel = Procedure.Test(dataset, Recmodel, epoch, w, world.config['multicore'])   # 예측
         # BPR Loss, average loss
         output_information, loss = Procedure.BPR_train_original(cuda_loader, Recmodel, bpr, epoch, neg_k=Neg_k,w=w)
         
@@ -72,10 +71,6 @@ try:
         ndcg.append(procedure['ndcg'])
         avg_loss.append(loss)
 
-        # 검증 오차가 가장 적은 최적의 모델을 저장
-        # if not best_val_loss or val_loss < best_val_loss:
-        #     best_val_loss = val_loss
-        #     best_model = model
 finally:
     if world.tensorboard:
         w.close()

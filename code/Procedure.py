@@ -68,7 +68,7 @@ def Test(dataset, Recmodel, epoch, w=None, multicore=0):
     Recmodel: model.LightGCN
     # eval mode with no dropout
     Recmodel = Recmodel.eval()   # 평가 모드 설정
-    max_K = max(world.topks)
+    max_K = max(world.topks)     # top-1
     if multicore == 1:
         pool = multiprocessing.Pool(CORES)
     results = {'precision': np.zeros(len(world.topks)),   # 정밀도 : TP/(TP+FP)
@@ -142,4 +142,4 @@ def Test(dataset, Recmodel, epoch, w=None, multicore=0):
             pool.close()
         print(results)
 
-        return results
+        return results, Recmodel

@@ -68,7 +68,7 @@ class BasicDataset(Dataset):
         """
         raise NotImplementedError
 
-class Loader(BasicDataset):
+class Loader_Switch(BasicDataset):
     """
     Dataset type for pytorch \n
     Incldue graph information
@@ -104,16 +104,14 @@ class Loader(BasicDataset):
 
                     ## 인덱스로 변환
                     for item in line[1:]:              # 1번부터 = 암세포
-                        if item not in self.item_to_index:   
-                            self.item_to_index[item] = item_current_index   # 딕셔너리에 고유 인덱스 추가
-                            item_current_index += 1
+                        if item not in self.user_to_index:   
+                            self.user_to_index[item] = user_current_index   # 딕셔너리에 고유 인덱스 추가
+                            user_current_index += 1
 
-                    if line[0] not in self.user_to_index:   # 0번 = 항암제
-                        self.user_to_index[line[0]] = user_current_index
-                        user_current_index += 1
-                    
-                    for key in line[1:]:               # item 인덱스 리스트로 변경
-                        items_.append(self.item_to_index.get(key))
+                    if line[0] not in self.item_to_index:   # 0번 = 항암제
+                        self.item_to_index[line[0]] = item_current_index
+                        item_current_index += 1            # item 인덱스 리스트로 변경
+                        items_.append(self.item_to_index.get(line[0]))
 
                     items = items_                     # item 인덱스 리스트
                     uid = self.user_to_index[line[0]]       # value of user dictionary = user 인덱스
@@ -136,16 +134,14 @@ class Loader(BasicDataset):
 
                     # 고유 인덱스 부여
                     for item in line[1:]:
-                        if item not in self.item_to_index:   
-                            self.item_to_index[item] = item_current_index
-                            item_current_index += 1
+                        if item not in self.user_to_index:   
+                            self.user_to_index[item] = user_current_index
+                            user_current_index += 1
 
-                    if line[0] not in self.user_to_index:
-                        self.user_to_index[line[0]] = user_current_index
-                        user_current_index += 1
-                    
-                    for key in line[1:]:
-                        items_.append(self.item_to_index.get(key))
+                    if line[0] not in self.item_to_index:
+                        self.item_to_index[line[0]] = item_current_index
+                        item_current_index += 1
+                        items_.append(self.item_to_index.get(line[0]))
 
                     items = items_
                     uid = self.user_to_index[line[0]]
